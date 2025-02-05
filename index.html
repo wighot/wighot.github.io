@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>San Valentín</title>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ffebee;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 2s;
+            z-index: 2;
+            position: relative;
+        }
+
+        h1 {
+            color: #e91e63;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: #fa99b8;
+            animation: 1s;
+        }
+
+        .buttons {
+            margin-top: 20px;
+        }
+
+        .btn {
+            background-color: #e91e63;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #c2185b;
+        }
+
+        .heart {
+            font-size: 100px;
+            color: #e91e63;
+            animation: beat 1s infinite;
+        }
+
+        .broken-heart {
+            font-size: 100px;
+            color: #e91e63;
+            animation: break 1s forwards;
+        }
+
+        .heart-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .heart-background span {
+            position: absolute;
+            color: #e91e63;
+            font-size: 40px;
+            animation: float 5s infinite ease-in-out;
+        }
+
+        .brokenheartimg {
+            width: 200px; /* Tamaño inicial */
+            height: auto;
+            margin-top: 20px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 1rem;
+            display: none;
+        }
+
+        .yes-img {
+            width: 200px; /* Tamaño inicial */
+            height: auto;
+            rotate: 80%;
+            margin-top: 20px;
+            margin-left: auto;
+            margin-right: auto;
+            display: none;
+            border-radius: 20px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes beat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes break {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(45deg) scale(0.8); opacity: 0.5; }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
+            50% { transform: translateY(-20px) rotate(180deg); opacity: 1; }
+            100% { transform: translateY(0) rotate(360deg); opacity: 0.7; }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .btn {
+                font-size: 1em;
+                padding: 8px 16px;
+            }
+
+            .heart, .broken-heart {
+                font-size: 80px;
+            }
+
+            .broken-heart-img, .yes-img {
+                width: 150px; /* Tamaño para tablet */
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.5em;
+            }
+
+            .btn {
+                font-size: 0.9em;
+                padding: 6px 12px;
+            }
+
+            .heart, .broken-heart {
+                font-size: 60px;
+            }
+
+            .broken-heart-img, .yes-img {
+                width: 100px; /* Tamaño para móvil */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Fondo con corazones animados -->
+    <div class="heart-background" id="heartBackground"></div>
+
+    <!-- Contenido principal -->
+    <div class="container">
+        <h1>¿Amor quieres salir conmigo en San Valentín <br> y nuestro Aniversario?</h1>
+        <h3>att. tu pololo</h3>
+        <div class="heart">💘</div>
+        <div class="broken-heart hidden">💔</div>
+        <div class="buttons">
+            <button class="btn" id="yesBtn">¡Sí!</button>
+            <button class="btn" id="noBtn">No</button>
+        </div>
+        <img src="https://i.pinimg.com/736x/41/2e/cd/412ecd40cc1ef3f6bdba866341cdf797.jpg" alt="Corazón roto" class="brokenheartimg" id="brokenHeartImg">
+        <img src="../sanvalentin/muak.jpeg" alt="Celebración" class="yes-img" id="yesImg">
+    </div>
+
+    <script>
+        // Función para crear corazones en el fondo
+        function createHearts() {
+            const heartBackground = document.getElementById('heartBackground');
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('span');
+                heart.innerHTML = '❤️';
+                heart.style.left = `${Math.random() * 100}%`;
+                heart.style.top = `${Math.random() * 100}%`;
+                heart.style.fontSize = `${Math.random() * 40 + 20}px`;
+                heart.style.animationDuration = `${Math.random() * 5 + 5}s`;
+                heartBackground.appendChild(heart);
+            }
+        }
+
+        // Lógica de los botones
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const heart = document.querySelector('.heart');
+        const brokenHeart = document.querySelector('.broken-heart');
+        const brokenHeartImg = document.getElementById('brokenHeartImg');
+        const yesImg = document.getElementById('yesImg');
+        const buttons = document.querySelector('.buttons');
+
+        noBtn.addEventListener('click', () => {
+            heart.classList.add('hidden');
+           
+            brokenHeart.classList.remove('hidden');
+            brokenHeartImg.style.display = 'block';
+            setTimeout(() => {
+                alert('Pensé que me amabas... 💔');
+            }, 1000);
+        });
+
+        yesBtn.addEventListener('click', () => {
+    buttons.classList.add('hidden'); // Ocultar botones
+    heart.classList.add('hidden');
+    brokenHeart.classList.add('hidden');
+    brokenHeartImg.style.display = 'none'; // Ocultar completamente la imagen del corazón roto
+    yesImg.style.display = 'block'; // Mostrar imagen de celebración
+    alert('¡Te amo bonita! ❤️ ¡Nos vemos muak!');
+});
+
+
+
+        // Crear corazones al cargar la página
+        createHearts();
+    </script>
+</body>
+</html>
